@@ -2,17 +2,21 @@
 
 To setup this React/Rails/GraphQL/Posgres, run these commands:
 
-* bundle install
+- bundle install
 
-* yarn install
+- yarn install
 
-* rake db:create
+- rake db:create
 
-* rake db:migrate
+- rake db:migrate
 
-* rails s
+- rubocop
 
-* open "http://localhost:3000/"
+- yarn test
+
+- rails s
+
+- open "http://localhost:3000/"
 
 To get started modifying the React frontend, look at:
 

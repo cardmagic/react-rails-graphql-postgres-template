@@ -62,4 +62,4 @@ gem 'apollo-tracing', '~> 1.6'
 gem 'batch-loader', '~> 1.2'
 
 # Added at 2018-08-20 13:58:28 -0700 by lucas:
-gem "rubocop-rails_config", "~> 0.2.3"
+gem 'rubocop-rails_config', '~> 0.2.3'
