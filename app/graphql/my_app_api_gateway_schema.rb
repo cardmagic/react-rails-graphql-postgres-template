@@ -16,7 +16,7 @@ class MyAppApiGatewaySchema < GraphQL::Schema
   end
 
   rescue_from StandardError do |_exception|
-    message = 'Please try to execute the query for this field later'
+    message = "Please try to execute the query for this field later"
     GraphQL::ExecutionError.new(message)
   end
 end

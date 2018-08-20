@@ -6,7 +6,7 @@ module Types
     # They will be entry points for queries on your schema.
 
     field :user, Types::User, null: true do
-      description 'A user'
+      description "A user"
       argument :auth_id, String, required: true
     end
 

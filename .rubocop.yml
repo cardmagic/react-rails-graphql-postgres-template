@@ -1,6 +1,10 @@
 Rails:
   Enabled: true
 
+inherit_gem:
+  rubocop-rails_config:
+    - config/rails.yml
+
 Style/Documentation:
   Enabled: false
 

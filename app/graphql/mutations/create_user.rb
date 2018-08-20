@@ -17,7 +17,7 @@ module Mutations
         user.save
         {
           user: user,
-          errors: ['User already exists']
+          errors: ["User already exists"]
         }
       else
         user = User.new(
