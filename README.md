@@ -10,4 +10,4 @@ To setup this React/Rails/GraphQL/Posgres, run these commands:
 
 * rails s
 
-* open "http://localhost:3000/graphiql"
+* open "http://localhost:3000/"
