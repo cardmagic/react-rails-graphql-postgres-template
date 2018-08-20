@@ -4,7 +4,7 @@ import Navbar from '../components/navbar'
 const Home = () => (
   <Fragment>
     <Navbar />
-    <div class="container">Hello world.</div>
+    <div className="container">Hello world.</div>
   </Fragment>
 )
 

@@ -1,17 +1,5 @@
-import React, { Fragment } from 'react'
-import {
-  Collapse,
-  Navbar as ReactNavbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  NavItem,
-  NavLink,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from 'reactstrap'
+import React from 'react'
+import { Collapse, Navbar as ReactNavbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap'
 
 const Navbar = () => (
   <ReactNavbar color="light" light expand="md">

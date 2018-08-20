@@ -4,25 +4,19 @@
 
 import React, { Fragment } from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Home from '../routes/home'
-import Post from '../routes/post'
 import GraphiQL from '../routes/graphiql'
 
 const App = () => (
   <Router>
     <Fragment>
       <Route exact path="/" component={Home} />
-      <Route exact path="/posts/:id" component={Post} />
       <Route exact path="/graphiql" component={GraphiQL} />
     </Fragment>
   </Router>
 )
 
 document.addEventListener('DOMContentLoaded', () => {
-  ReactDOM.render(
-    <App />,
-    document.body.appendChild(document.getElementById('app'))
-  )
+  ReactDOM.render(<App />, document.body.appendChild(document.getElementById('app')))
 })

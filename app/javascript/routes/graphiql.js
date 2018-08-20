@@ -4,7 +4,7 @@ import Navbar from '../components/navbar'
 import '../assets/graphiql.css'
 
 const graphQLFetcher = graphQLParams =>
-  fetch(window.location.origin + '/graphql', {
+  fetch(`${window.location.origin}/graphql`, {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(graphQLParams),

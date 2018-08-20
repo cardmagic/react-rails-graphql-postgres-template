@@ -1,0 +1,61 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "jest/globals": true
+  },
+  "globals": {
+    "navigator": true,
+    "fetch": false,
+    "logger": false,
+    "localStorage": true,
+    "window": true,
+    "document": true,
+    "__DEV__": false
+  },
+  "extends": [
+    "airbnb",
+    "prettier",
+    "prettier/react",
+    "plugin:jsx-control-statements/recommended"
+  ],
+  "plugins": [
+    "jest",
+    "prettier",
+    "jsx-control-statements"
+  ],
+  "rules": {
+    "import/no-extraneous-dependencies": ["warn", {"devDependencies": true}],
+    "import/prefer-default-export": "off",
+    "jest/no-disabled-tests": "warn",
+    "jest/no-focused-tests": "error",
+    "jest/no-identical-title": "error",
+    "jest/valid-expect": "error",
+    "no-use-before-define": "off",
+    "jsx-a11y/label-has-for": "off",
+    "no-underscore-dangle": "off",
+    "no-unused-vars": ["error", {"vars": "all", "args": "after-used", "ignoreRestSiblings": true, "varsIgnorePattern": "^_$", "argsIgnorePattern": "^_"}],
+    "no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true }],
+    "prettier/prettier": ["error", {"singleQuote": true, "semi": false, "trailingComma": "es5"}],
+    "react/forbid-prop-types": "off",
+    "react/jsx-filename-extension": ["warn", { "extensions": [".js"] }],
+    "react/no-typos": "off",
+    "react/require-default-props": "off",
+    "jsx-control-statements/jsx-jcs-no-undef": "off",
+    "react/jsx-no-undef": ["error", { "allowGlobals": true }],
+    "no-undef": "error",
+    "react/sort-comp": [1, {
+      "order": [
+        "static-methods",
+        "constructor",
+        "lifecycle",
+        "everything-else",
+        "render"
+      ]
+    }]
+  },
+  "settings": {
+    "import/resolver": {
+      "babel-module": {}
+    }
+  }
+}
