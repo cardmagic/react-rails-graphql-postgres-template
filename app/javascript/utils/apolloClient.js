@@ -17,7 +17,7 @@ const stateLink = withClientState({
 })
 
 const httpLink = new HttpLink({
-  uri: process.env.REACT_APP_GRAPHQL_ENDPOINT,
+  uri: process.env.REACT_APP_GRAPHQL_ENDPOINT || 'http://localhost:3000/graphql',
 })
 
 const link = ApolloLink.from([stateLink, httpLink])
