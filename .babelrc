@@ -1,5 +1,6 @@
 {
   "presets": [
+    "airbnb",
     [
       "env",
       {
@@ -21,6 +22,18 @@
       {
         "spec": true
       }
+    ],
+    [
+      "module-resolver",
+      {
+        "root": ["./app/javascript/"],
+        "alias": {
+          "assets": "./app/javascript/assets",
+        }
+      }
+    ],
+    "js-logger",
+    "jsx-control-statements"
     ]
   ]
 }
