@@ -2,6 +2,10 @@
 
 To setup this React/Rails/GraphQL/Posgres, run these commands:
 
+- git clone https://github.com/cardmagic/react-rails-graphql-postgres-template.git
+
+- cd react-rails-graphql-postgres-template
+
 - bundle install
 
 - yarn install
