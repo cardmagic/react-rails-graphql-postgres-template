@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "test": "eslint app/javascript/**/*.js && flow"
+        "test": "eslint app/javascript/ && flow"
     },
     "dependencies": {
         "@rails/webpacker": "3.5",
