@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 module Types
-  class <%= type_file.camelcase %> < Types::BaseObject
+  class <%= class_name %> < Types::BaseObject
     field :id, ID, null: false
 <% attributes.each do |attribute| -%>
-    field :<%= attribute.name %>, <%= attribute.type.camelcase %>, null: true
+    field :<%= attribute.name %>, <%= attribute.type.capitalize %>, null: true
 <% end -%>
 <% if options[:timestamps] %>
     field :created_at, String, null: false
