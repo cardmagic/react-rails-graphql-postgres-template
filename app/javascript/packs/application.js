@@ -2,7 +2,7 @@
 // like app/views/layouts/application.html.erb. All it does is render <div>Hello React</div> at the bottom
 // of the page.
 
-import React from 'react'
+import React, { Fragment } from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { ApolloProvider } from 'react-apollo'
@@ -13,12 +13,14 @@ import GraphiQL from '../routes/graphiql'
 import apolloClient from '../utils/apolloClient'
 
 const App = () => (
-  <Router>
-    <ApolloProvider client={apolloClient}>
-      <Route exact path="/" component={Home} />
-      <Route exact path="/graphiql" component={GraphiQL} />
-    </ApolloProvider>
-  </Router>
+  <ApolloProvider client={apolloClient}>
+    <Router>
+      <Fragment>
+        <Route exact path="/" component={Home} />
+        <Route exact path="/graphiql" component={GraphiQL} />
+      </Fragment>
+    </Router>
+  </ApolloProvider>
 )
 
 document.addEventListener('DOMContentLoaded', () => {
