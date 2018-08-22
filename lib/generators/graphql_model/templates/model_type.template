@@ -3,9 +3,8 @@
 module Types
   class <%= type_file.camelcase %> < Types::BaseObject
     field :id, ID, null: false
-    <% attributes.each do |attribute| -%>
 <% attributes.each do |attribute| -%>
-    field :<%= attribute.name %>, <%= attribute.type %>, null: true
+    field :<%= attribute.name %>, <%= attribute.type.camelcase %>, null: true
 <% end -%>
 <% if options[:timestamps] %>
     field :created_at, String, null: false
