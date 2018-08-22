@@ -1,0 +1,32 @@
+# frozen_string_literal: true
+
+module Mutations
+  class Create<%= class_name %> < GraphQL::Schema::Mutation
+    null true
+
+<% attributes.each do |attribute| -%>
+    field :<%= attribute.name %>, <%= attribute.type.capitalize %>, required: false
+<% end -%>
+
+    field :user, Types::<%= class_name %>, null: true
+    field :errors, [String], null: false
+
+    def resolve(<%= attributes.map { |attribute| "#{attribute}:" }.join(", ") %>)
+      <%= class_name.camelcase %> = <%= class_name %>.new(
+<%= attributes.map { |attribute| "        #{attribute}: #{attribute}" }.join(",\n") %>
+      )
+
+      if <%= class_name.camelcase %>.save
+        return {
+          <%= class_name.camelcase %>: <%= class_name.camelcase %>,
+          errors: []
+        }
+      else
+        return {
+          <%= class_name.camelcase %>: nil,
+          errors: <%= class_name.camelcase %>.errors.full_messages
+        }
+      end
+    end
+  end
+end
