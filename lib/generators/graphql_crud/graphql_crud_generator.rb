@@ -22,6 +22,16 @@ class GraphqlCrudGenerator < Rails::Generators::NamedBase
     end
   end
 
+  def generate_read_query_client
+    attributes.each { |a| a.attr_options.delete(:index) if a.reference? && !a.has_index? } if options[:indexes] == false
+    template "read_query_client.template", "app/javascript/graphql/queries/get#{class_name}.js"
+  end
+
+  def generate_all_query_client
+    attributes.each { |a| a.attr_options.delete(:index) if a.reference? && !a.has_index? } if options[:indexes] == false
+    template "all_query_client.template", "app/javascript/graphql/queries/getAll#{class_name.pluralize}.js"
+  end
+
   def generate_create_mutation_server
     attributes.each { |a| a.attr_options.delete(:index) if a.reference? && !a.has_index? } if options[:indexes] == false
     template "create_mutation_server.template", "app/graphql/mutations/create_#{file_name}.rb"

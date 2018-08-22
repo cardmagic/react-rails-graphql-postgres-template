@@ -1,0 +1,25 @@
+import gql from 'graphql-tag'
+import client from '../../utils/apolloClient'
+
+const GET_<%= class_name.pluralize.underscore.upcase %> = gql`
+  query {
+    <%= class_name.pluralize.camelcase(:lower) %> {
+      id
+<%= attributes.map { |attribute| "      #{attribute.name.camelcase(:lower)}" }.join("\n") %>
+    }
+  }
+`
+
+const get<%= class_name.pluralize %> = async () => {
+  if (!client) return null
+
+  const {
+    data: { <%= class_name.pluralize.camelcase(:lower) %> },
+  } = await client.query({
+    query: GET_<%= class_name.underscore.pluralize.upcase %>,
+  })
+
+  return <%= class_name.pluralize.camelcase(:lower) %>
+}
+
+export default get<%= class_name.pluralize %>
