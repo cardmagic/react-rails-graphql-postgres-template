@@ -13,7 +13,7 @@ class GraphqlCrudGenerator < Rails::Generators::NamedBase
   def configure_graphql_list
     line = "class QueryType < Types::BaseObject"
     gsub_file "app/graphql/types/query_type.rb", /(#{Regexp.escape(line)})/mi do |match|
-      "#{match}\n    field :#{class_name.underscore.pluralize}, [Types::#{class_name}], null: true do\n      description \"A list of #{class_name.underscore.pluralize}\"\n    end\n    def #{class_name.downcase.pluralize}\n      ::#{class_name}.all\n    end\n\n    field :#{class_name.downcase}, Types::#{class_name}, null: true do\n      description \"A #{class_name.downcase}\"\n      argument :id, ID, required: true\n    end\n    def #{class_name.downcase}(id:)\n      ::#{class_name}.find(id: id)\n    end\n"
+      "#{match}\n    field :#{class_name.underscore.pluralize}, [Types::#{class_name}], null: true do\n      description \"A list of #{class_name.underscore.pluralize}\"\n    end\n    def #{class_name.downcase.pluralize}\n      ::#{class_name}.all\n    end\n\n    field :#{class_name.downcase}, Types::#{class_name}, null: true do\n      description \"A #{class_name.downcase}\"\n      argument :id, ID, required: true\n    end\n    def #{class_name.downcase}(id:)\n      ::#{class_name}.find_by(id: id)\n    end\n"
     end
 
     line = "class MutationType < Types::BaseObject"
