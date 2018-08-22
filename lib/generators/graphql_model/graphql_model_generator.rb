@@ -10,6 +10,13 @@ class GraphqlModelGenerator < Rails::Generators::NamedBase
     template "model_type.template", "app/graphql/types/#{file_name}.rb"
   end
 
+  def configure_graphql_model
+    line = "class QueryType < Types::BaseObject"
+    gsub_file "app/graphql/types/query_type.rb", /(#{Regexp.escape(line)})/mi do |match|
+      "#{match}\n    field :#{class_name.downcase.pluralize}, [Types::#{class_name}], null: true do\n      description \"A list of #{class_name.downcase.pluralize}\"\n    end\n\n    def #{class_name.downcase.pluralize}\n      ::#{class_name}.all\n    end\n"
+    end
+  end
+
   private
 
     def attributes_with_index
