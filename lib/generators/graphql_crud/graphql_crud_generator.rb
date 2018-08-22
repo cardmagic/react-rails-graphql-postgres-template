@@ -13,7 +13,12 @@ class GraphqlCrudGenerator < Rails::Generators::NamedBase
   def configure_graphql_list
     line = "class QueryType < Types::BaseObject"
     gsub_file "app/graphql/types/query_type.rb", /(#{Regexp.escape(line)})/mi do |match|
-      "#{match}\n    field :#{class_name.downcase.pluralize}, [Types::#{class_name}], null: true do\n      description \"A list of #{class_name.downcase.pluralize}\"\n    end\n\n    def #{class_name.downcase.pluralize}\n      ::#{class_name}.all\n    end\n    field :#{class_name.downcase}, Types::#{class_name}, null: true do\n      description \"A #{class_name.downcase}\"\n      argument :id, ID, required: true\n    end\n\n    def #{class_name.downcase}(id:)\n      ::#{class_name}.find(id: id)\n    end\n"
+      "#{match}\n    field :#{class_name.underscore.pluralize}, [Types::#{class_name}], null: true do\n      description \"A list of #{class_name.underscore.pluralize}\"\n    end\n    def #{class_name.downcase.pluralize}\n      ::#{class_name}.all\n    end\n\n    field :#{class_name.downcase}, Types::#{class_name}, null: true do\n      description \"A #{class_name.downcase}\"\n      argument :id, ID, required: true\n    end\n    def #{class_name.downcase}(id:)\n      ::#{class_name}.find(id: id)\n    end\n"
+    end
+
+    line = "class MutationType < Types::BaseObject"
+    gsub_file "app/graphql/types/mutation_type.rb", /(#{Regexp.escape(line)})/mi do |match|
+      "#{match}\n    field :create#{class_name}, mutation: Mutations::Create#{class_name}\n    field :update#{class_name}, mutation: Mutations::Update#{class_name}\n    field :delete#{class_name}, mutation: Mutations::Delete#{class_name}"
     end
   end
 
@@ -24,7 +29,7 @@ class GraphqlCrudGenerator < Rails::Generators::NamedBase
 
   def generate_create_mutation_client
     attributes.each { |a| a.attr_options.delete(:index) if a.reference? && !a.has_index? } if options[:indexes] == false
-    template "create_mutation_client.template", "app/javascript/graphql/mutations/create#{class_name}.rb"
+    template "create_mutation_client.template", "app/javascript/graphql/mutations/create#{class_name}.js"
   end
 
   def generate_update_mutation_server
@@ -34,7 +39,7 @@ class GraphqlCrudGenerator < Rails::Generators::NamedBase
 
   def generate_update_mutation_client
     attributes.each { |a| a.attr_options.delete(:index) if a.reference? && !a.has_index? } if options[:indexes] == false
-    template "update_mutation_client.template", "app/javascript/graphql/mutations/update#{class_name}.rb"
+    template "update_mutation_client.template", "app/javascript/graphql/mutations/update#{class_name}.js"
   end
 
   def generate_delete_mutation_server
@@ -42,7 +47,7 @@ class GraphqlCrudGenerator < Rails::Generators::NamedBase
   end
 
   def generate_delete_mutation_client
-    template "delete_mutation_client.template", "app/javascript/graphql/mutations/delete#{class_name}.rb"
+    template "delete_mutation_client.template", "app/javascript/graphql/mutations/delete#{class_name}.js"
   end
 
   private

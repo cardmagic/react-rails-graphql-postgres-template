@@ -1,0 +1,31 @@
+import gql from 'graphql-tag'
+import client from '../../utils/apolloClient'
+
+const CREATE_<%= class_name.underscore.upcase %> = gql`
+  mutation Create<%= class_name %>(<%= attributes.map { |attribute| "$#{attribute.name.camelcase(:lower)}: #{attribute.type.capitalize}" }.join(", ") %>) {
+    create<%= class_name %>(<%= attributes.map { |attribute| "#{attribute.name.camelcase(:lower)}: $#{attribute.name.camelcase(:lower)}" }.join(", ") %>) {
+      <%= class_name.camelcase(:lower) %> {
+<%= attributes.map { |attribute| "        #{attribute.name.camelcase(:lower)}" }.join("\n") %>
+      }
+    }
+  }
+`
+
+const create<%= class_name %> = async ({ <%= attributes.map { |attribute| attribute.name.camelcase(:lower) }.join(", ") %> }) => {
+  if (!client) return null
+
+  const {
+    data: {
+      create<%= class_name %>: { <%= class_name.camelcase(:lower) %> },
+    },
+  } = await client.mutate({
+    mutation: CREATE_<%= class_name.underscore.upcase %>,
+    variables: {
+<%= attributes.map { |attribute| "      #{attribute.name.camelcase(:lower)}" }.join(",\n") %>,
+    },
+  })
+
+  return <%= class_name.camelcase(:lower) %>
+}
+
+export default create<%= class_name %>

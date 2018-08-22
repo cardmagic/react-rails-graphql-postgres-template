@@ -1,0 +1,28 @@
+# frozen_string_literal: true
+
+module Mutations
+  class Delete<%= class_name %> < GraphQL::Schema::Mutation
+    null true
+
+    argument :id, ID, required: true
+
+    field :<%= class_name.underscore %>, Types::<%= class_name %>, null: true
+    field :errors, [String], null: false
+
+    def resolve(id:)
+      <%= class_name.underscore %> = <%= class_name %>.find(id)
+
+      if <%= class_name.underscore %>.destroy
+        return {
+          <%= class_name.underscore %>: <%= class_name.underscore %>,
+          errors: []
+        }
+      else
+        return {
+          <%= class_name.underscore %>: nil,
+          errors: <%= class_name.underscore %>.errors.full_messages
+        }
+      end
+    end
+  end
+end

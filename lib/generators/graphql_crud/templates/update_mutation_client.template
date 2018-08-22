@@ -1,0 +1,32 @@
+import gql from 'graphql-tag'
+import client from '../../utils/apolloClient'
+
+const UPDATE_<%= class_name.underscore.upcase %> = gql`
+  mutation Update<%= class_name %>($id: ID!, <%= attributes.map { |attribute| "$#{attribute.name.camelcase(:lower)}: #{attribute.type.capitalize}!" }.join(", ") %>) {
+    update<%= class_name %>(id: $id, <%= attributes.map { |attribute| "#{attribute.name.camelcase(:lower)}: $#{attribute.name.camelcase(:lower)}" }.join(", ") %>) {
+      <%= class_name.camelcase(:lower) %> {
+<%= attributes.map { |attribute| "        #{attribute.name.camelcase(:lower)}" }.join("\n") %>
+      }
+    }
+  }
+`
+
+const update<%= class_name %> = async ({ id, <%= attributes.map { |attribute| attribute.name.camelcase(:lower) }.join(", ") %> }) => {
+  if (!client) return null
+
+  const {
+    data: {
+      update<%= class_name %>: { <%= class_name.camelcase(:lower) %> },
+    },
+  } = await client.mutate({
+    mutation: UPDATE_<%= class_name.underscore.upcase %>,
+    variables: {
+      id,
+<%= attributes.map { |attribute| "      #{attribute.name.camelcase(:lower)}" }.join(",\n") %>,
+    },
+  })
+
+  return <%= class_name.camelcase(:lower) %>
+}
+
+export default update<%= class_name %>

@@ -5,26 +5,26 @@ module Mutations
     null true
 
 <% attributes.each do |attribute| -%>
-    field :<%= attribute.name %>, <%= attribute.type.capitalize %>, required: false
+    argument :<%= attribute.name %>, <%= attribute.type.capitalize %>, required: false
 <% end -%>
 
-    field :user, Types::<%= class_name %>, null: true
+    field :<%= class_name.underscore %>, Types::<%= class_name %>, null: true
     field :errors, [String], null: false
 
-    def resolve(<%= attributes.map { |attribute| "#{attribute}:" }.join(", ") %>)
-      <%= class_name.camelcase %> = <%= class_name %>.new(
-<%= attributes.map { |attribute| "        #{attribute}: #{attribute}" }.join(",\n") %>
+    def resolve(<%= attributes.map { |attribute| "#{attribute.name}:" }.join(", ") %>)
+      <%= class_name.underscore %> = <%= class_name %>.new(
+<%= attributes.map { |attribute| "        #{attribute.name}: #{attribute.name}" }.join(",\n") %>
       )
 
-      if <%= class_name.camelcase %>.save
+      if <%= class_name.underscore %>.save
         return {
-          <%= class_name.camelcase %>: <%= class_name.camelcase %>,
+          <%= class_name.underscore %>: <%= class_name.underscore %>,
           errors: []
         }
       else
         return {
-          <%= class_name.camelcase %>: nil,
-          errors: <%= class_name.camelcase %>.errors.full_messages
+          <%= class_name.underscore %>: nil,
+          errors: <%= class_name.underscore %>.errors.full_messages
         }
       end
     end

@@ -1,0 +1,31 @@
+import gql from 'graphql-tag'
+import client from '../../utils/apolloClient'
+
+const DELETE_<%= class_name.underscore.upcase %> = gql`
+  mutation Delete<%= class_name %>(id: ID) {
+    delete<%= class_name %>(id: $id) {
+      <%= class_name.camelcase(:lower) %> {
+        id
+      }
+    }
+  }
+`
+
+const delete<%= class_name %> = async ({ id }) => {
+  if (!client) return null
+
+  const {
+    data: {
+      delete<%= class_name %>: { <%= class_name.camelcase(:lower) %> },
+    },
+  } = await client.mutate({
+    mutation: DELETE_<%= class_name.underscore.upcase %>,
+    variables: {
+      id,
+    },
+  })
+
+  return <%= class_name.camelcase(:lower) %>
+}
+
+export default delete<%= class_name %>

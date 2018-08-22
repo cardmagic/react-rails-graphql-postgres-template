@@ -1,0 +1,31 @@
+# frozen_string_literal: true
+
+module Mutations
+  class Update<%= class_name %> < GraphQL::Schema::Mutation
+    null true
+
+    argument :id, ID, required: true
+<% attributes.each do |attribute| -%>
+    argument :<%= attribute.name %>, <%= attribute.type.capitalize %>, required: true
+<% end -%>
+
+    field :<%= class_name.underscore %>, Types::<%= class_name %>, null: true
+    field :errors, [String], null: false
+
+    def resolve(id:, <%= attributes.map { |attribute| "#{attribute.name}:" }.join(", ") %>)
+      <%= class_name.underscore %> = <%= class_name %>.find(id)
+
+      if <%= class_name.underscore %>.update_attributes(<%= attributes.map { |attribute| "#{attribute.name}: #{attribute.name}" }.join(", ") %>)
+        return {
+          <%= class_name.underscore %>: <%= class_name.underscore %>,
+          errors: []
+        }
+      else
+        return {
+          <%= class_name.underscore %>: nil,
+          errors: <%= class_name.underscore %>.errors.full_messages
+        }
+      end
+    end
+  end
+end
