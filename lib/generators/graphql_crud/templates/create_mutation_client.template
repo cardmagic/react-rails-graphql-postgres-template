@@ -1,7 +1,9 @@
+import React from 'react'
 import gql from 'graphql-tag'
-import client from '../../utils/apolloClient'
+import { Mutation } from 'react-apollo'
+import PropTypes from 'prop-types'
 
-const CREATE_<%= class_name.underscore.upcase %> = gql`
+const mutation = gql`
   mutation Create<%= class_name %>(<%= attributes.map { |attribute| "$#{attribute.name.camelcase(:lower)}: #{attribute.type.capitalize}" }.join(", ") %>) {
     create<%= class_name %>(<%= attributes.map { |attribute| "#{attribute.name.camelcase(:lower)}: $#{attribute.name.camelcase(:lower)}" }.join(", ") %>) {
       <%= class_name.camelcase(:lower) %> {
@@ -11,21 +13,15 @@ const CREATE_<%= class_name.underscore.upcase %> = gql`
   }
 `
 
-const create<%= class_name %> = async ({ <%= attributes.map { |attribute| attribute.name.camelcase(:lower) }.join(", ") %> }) => {
-  if (!client) return null
+const Create<%= class_name %>Mutation = ({ children, variables, ...apolloProps }) => (
+  <Mutation mutation={mutation} variables={variables} {...apolloProps}>
+    {(mutationHandler, results) => children({ mutationHandler, results })}
+  </Mutation>
+)
 
-  const {
-    data: {
-      create<%= class_name %>: { <%= class_name.camelcase(:lower) %> },
-    },
-  } = await client.mutate({
-    mutation: CREATE_<%= class_name.underscore.upcase %>,
-    variables: {
-<%= attributes.map { |attribute| "      #{attribute.name.camelcase(:lower)}" }.join(",\n") %>,
-    },
-  })
-
-  return <%= class_name.camelcase(:lower) %>
+Create<%= class_name %>Mutation.propTypes = {
+  children: PropTypes.func.isRequired,
+  variables: PropTypes.object,
 }
 
-export default create<%= class_name %>
+export default Create<%= class_name %>Mutation

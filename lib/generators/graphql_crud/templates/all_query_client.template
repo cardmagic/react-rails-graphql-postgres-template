@@ -1,7 +1,9 @@
+import React from 'react'
 import gql from 'graphql-tag'
-import client from '../../utils/apolloClient'
+import { Query } from 'react-apollo'
+import PropTypes from 'prop-types'
 
-const GET_<%= class_name.pluralize.underscore.upcase %> = gql`
+const query = gql`
   query {
     <%= class_name.pluralize.camelcase(:lower) %> {
       id
@@ -10,16 +12,25 @@ const GET_<%= class_name.pluralize.underscore.upcase %> = gql`
   }
 `
 
-const get<%= class_name.pluralize %> = async () => {
-  if (!client) return null
+const GetAll<%= class_name.pluralize %>Query = ({
+  children,
+  fetchPolicy = 'cache-and-network',
+  variables,
+  ...apolloProps
+}) => (
+  <Query query={query} fetchPolicy={fetchPolicy} variables={variables} {...apolloProps}>
+    {queryProps =>
+      children({
+        ...queryProps,
+      })
+    }
+  </Query>
+)
 
-  const {
-    data: { <%= class_name.pluralize.camelcase(:lower) %> },
-  } = await client.query({
-    query: GET_<%= class_name.underscore.pluralize.upcase %>,
-  })
-
-  return <%= class_name.pluralize.camelcase(:lower) %>
+GetAll<%= class_name.pluralize %>Query.propTypes = {
+  children: PropTypes.func.isRequired,
+  fetchPolicy: PropTypes.string,
+  variables: PropTypes.object,
 }
 
-export default get<%= class_name.pluralize %>
+export default GetAll<%= class_name.pluralize %>Query

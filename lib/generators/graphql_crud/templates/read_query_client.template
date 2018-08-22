@@ -1,7 +1,9 @@
+import React from 'react'
 import gql from 'graphql-tag'
-import client from '../../utils/apolloClient'
+import { Query } from 'react-apollo'
+import PropTypes from 'prop-types'
 
-const GET_<%= class_name.underscore.upcase %> = gql`
+const query = gql`
   query Get<%= class_name %>($id: ID) {
     <%= class_name.camelcase(:lower) %>(id: $id) {
       id
@@ -10,19 +12,25 @@ const GET_<%= class_name.underscore.upcase %> = gql`
   }
 `
 
-const get<%= class_name %> = async ({ id }) => {
-  if (!client) return null
-
-  const {
-    data: { <%= class_name.camelcase(:lower) %> },
-  } = await client.query({
-    query: GET_<%= class_name.underscore.upcase %>,
-    variables: {
-      id,
+const Get<%= class_name %>Query = ({
+  children,
+  fetchPolicy = 'cache-and-network',
+  variables,
+  ...apolloProps
+}) => (
+  <Query query={query} fetchPolicy={fetchPolicy} variables={variables} {...apolloProps}>
+    {queryProps =>
+      children({
+        ...queryProps,
+      })
     }
-  })
+  </Query>
+)
 
-  return <%= class_name.camelcase(:lower) %>
+Get<%= class_name %>Query.propTypes = {
+  children: PropTypes.func.isRequired,
+  fetchPolicy: PropTypes.string,
+  variables: PropTypes.object,
 }
 
-export default get<%= class_name %>
+export default Get<%= class_name %>Query

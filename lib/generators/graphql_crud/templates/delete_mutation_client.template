@@ -1,7 +1,9 @@
+import React from 'react'
 import gql from 'graphql-tag'
-import client from '../../utils/apolloClient'
+import { Mutation } from 'react-apollo'
+import PropTypes from 'prop-types'
 
-const DELETE_<%= class_name.underscore.upcase %> = gql`
+const mutation = gql`
   mutation Delete<%= class_name %>(id: ID) {
     delete<%= class_name %>(id: $id) {
       <%= class_name.camelcase(:lower) %> {
@@ -11,21 +13,15 @@ const DELETE_<%= class_name.underscore.upcase %> = gql`
   }
 `
 
-const delete<%= class_name %> = async ({ id }) => {
-  if (!client) return null
+const Delete<%= class_name %>Mutation = ({ children, variables, ...apolloProps }) => (
+  <Mutation mutation={mutation} variables={variables} {...apolloProps}>
+    {(mutationHandler, results) => children({ mutationHandler, results })}
+  </Mutation>
+)
 
-  const {
-    data: {
-      delete<%= class_name %>: { <%= class_name.camelcase(:lower) %> },
-    },
-  } = await client.mutate({
-    mutation: DELETE_<%= class_name.underscore.upcase %>,
-    variables: {
-      id,
-    },
-  })
-
-  return <%= class_name.camelcase(:lower) %>
+Delete<%= class_name %>Mutation.propTypes = {
+  children: PropTypes.func.isRequired,
+  variables: PropTypes.object,
 }
 
-export default delete<%= class_name %>
+export default Delete<%= class_name %>Mutation

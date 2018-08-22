@@ -24,12 +24,12 @@ class GraphqlCrudGenerator < Rails::Generators::NamedBase
 
   def generate_read_query_client
     attributes.each { |a| a.attr_options.delete(:index) if a.reference? && !a.has_index? } if options[:indexes] == false
-    template "read_query_client.template", "app/javascript/graphql/queries/get#{class_name}.js"
+    template "read_query_client.template", "app/javascript/graphql/queries/Get#{class_name}Query.js"
   end
 
   def generate_all_query_client
     attributes.each { |a| a.attr_options.delete(:index) if a.reference? && !a.has_index? } if options[:indexes] == false
-    template "all_query_client.template", "app/javascript/graphql/queries/getAll#{class_name.pluralize}.js"
+    template "all_query_client.template", "app/javascript/graphql/queries/GetAll#{class_name.pluralize}Query.js"
   end
 
   def generate_create_mutation_server
@@ -39,7 +39,7 @@ class GraphqlCrudGenerator < Rails::Generators::NamedBase
 
   def generate_create_mutation_client
     attributes.each { |a| a.attr_options.delete(:index) if a.reference? && !a.has_index? } if options[:indexes] == false
-    template "create_mutation_client.template", "app/javascript/graphql/mutations/create#{class_name}.js"
+    template "create_mutation_client.template", "app/javascript/graphql/mutations/Create#{class_name}Mutation.js"
   end
 
   def generate_update_mutation_server
@@ -49,7 +49,7 @@ class GraphqlCrudGenerator < Rails::Generators::NamedBase
 
   def generate_update_mutation_client
     attributes.each { |a| a.attr_options.delete(:index) if a.reference? && !a.has_index? } if options[:indexes] == false
-    template "update_mutation_client.template", "app/javascript/graphql/mutations/update#{class_name}.js"
+    template "update_mutation_client.template", "app/javascript/graphql/mutations/Update#{class_name}Mutation.js"
   end
 
   def generate_delete_mutation_server
@@ -57,7 +57,7 @@ class GraphqlCrudGenerator < Rails::Generators::NamedBase
   end
 
   def generate_delete_mutation_client
-    template "delete_mutation_client.template", "app/javascript/graphql/mutations/delete#{class_name}.js"
+    template "delete_mutation_client.template", "app/javascript/graphql/mutations/Delete#{class_name}Mutation.js"
   end
 
   private

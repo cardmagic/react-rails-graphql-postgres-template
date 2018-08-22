@@ -22,9 +22,24 @@ const httpLink = new HttpLink({
 
 const link = ApolloLink.from([stateLink, httpLink])
 
+const defaultOptions = {
+  watchQuery: {
+    fetchPolicy: 'cache-and-network',
+    errorPolicy: 'all',
+  },
+  query: {
+    fetchPolicy: 'cache-and-network',
+    errorPolicy: 'all',
+  },
+  mutate: {
+    errorPolicy: 'all',
+  },
+}
+
 const client = new ApolloClient({
   link,
   cache,
+  defaultOptions,
 })
 
 export default client
