@@ -15,7 +15,7 @@ const mutation = gql`
 
 const Delete<%= class_name %>Mutation = ({ children, variables, ...apolloProps }) => (
   <Mutation mutation={mutation} variables={variables} {...apolloProps}>
-    {(mutationHandler, results) => children({ mutationHandler, results })}
+    {(delete<%= class_name %>Mutation, mutationResults) => children({ delete<%= class_name %>Mutation, mutationResults })}
   </Mutation>
 )
 

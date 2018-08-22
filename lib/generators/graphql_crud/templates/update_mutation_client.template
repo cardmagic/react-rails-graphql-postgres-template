@@ -15,7 +15,7 @@ const mutation = gql`
 
 const Update<%= class_name %>Mutation = ({ children, variables, ...apolloProps }) => (
   <Mutation mutation={mutation} variables={variables} {...apolloProps}>
-    {(mutationHandler, results) => children({ mutationHandler, results })}
+    {(update<%= class_name %>Mutation, mutationResults) => children({ update<%= class_name %>Mutation, mutationResults })}
   </Mutation>
 )
 
