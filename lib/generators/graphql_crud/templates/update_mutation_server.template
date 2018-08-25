@@ -5,17 +5,17 @@ module Mutations
     null true
 
     argument :id, ID, required: true
-<% attributes.each do |attribute| -%>
+<% attributes_for_grahql.each do |attribute| -%>
     argument :<%= attribute.name %>, <%= attribute.type.capitalize %>, required: true
 <% end -%>
 
     field :<%= class_name.underscore %>, Types::<%= class_name %>, null: true
     field :errors, [String], null: false
 
-    def resolve(id:, <%= attributes.map { |attribute| "#{attribute.name}:" }.join(", ") %>)
+    def resolve(id:, <%= attributes_for_grahql.map { |attribute| "#{attribute.name}:" }.join(", ") %>)
       <%= class_name.underscore %> = <%= class_name %>.find(id)
 
-      if <%= class_name.underscore %>.update_attributes(<%= attributes.map { |attribute| "#{attribute.name}: #{attribute.name}" }.join(", ") %>)
+      if <%= class_name.underscore %>.update_attributes(<%= attributes_for_grahql.map { |attribute| "#{attribute.name}: #{attribute.name}" }.join(", ") %>)
         return {
           <%= class_name.underscore %>: <%= class_name.underscore %>,
           errors: []

@@ -4,16 +4,16 @@ module Mutations
   class Create<%= class_name %> < GraphQL::Schema::Mutation
     null true
 
-<% attributes.each do |attribute| -%>
+<% attributes_for_grahql.each do |attribute| -%>
     argument :<%= attribute.name %>, <%= attribute.type.capitalize %>, required: false
 <% end -%>
 
     field :<%= class_name.underscore %>, Types::<%= class_name %>, null: true
     field :errors, [String], null: false
 
-    def resolve(<%= attributes.map { |attribute| "#{attribute.name}:" }.join(", ") %>)
+    def resolve(<%= attributes_for_grahql.map { |attribute| "#{attribute.name}:" }.join(", ") %>)
       <%= class_name.underscore %> = <%= class_name %>.new(
-<%= attributes.map { |attribute| "        #{attribute.name}: #{attribute.name}" }.join(",\n") %>
+<%= attributes_for_grahql.map { |attribute| "        #{attribute.name}: #{attribute.name}" }.join(",\n") %>
       )
 
       if <%= class_name.underscore %>.save

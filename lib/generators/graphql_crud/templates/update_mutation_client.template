@@ -4,10 +4,10 @@ import { Mutation } from 'react-apollo'
 import PropTypes from 'prop-types'
 
 const mutation = gql`
-  mutation Update<%= class_name %>($id: ID!, <%= attributes.map { |attribute| "$#{attribute.name.camelcase(:lower)}: #{attribute.type.capitalize}!" }.join(", ") %>) {
-    update<%= class_name %>(id: $id, <%= attributes.map { |attribute| "#{attribute.name.camelcase(:lower)}: $#{attribute.name.camelcase(:lower)}" }.join(", ") %>) {
+  mutation Update<%= class_name %>($id: ID!, <%= attributes_for_grahql.map { |attribute| "$#{attribute.name.camelcase(:lower)}: #{attribute.type.capitalize}!" }.join(", ") %>) {
+    update<%= class_name %>(id: $id, <%= attributes_for_grahql.map { |attribute| "#{attribute.name.camelcase(:lower)}: $#{attribute.name.camelcase(:lower)}" }.join(", ") %>) {
       <%= class_name.camelcase(:lower) %> {
-<%= attributes.map { |attribute| "        #{attribute.name.camelcase(:lower)}" }.join("\n") %>
+<%= attributes_for_grahql.map { |attribute| "        #{attribute.name.camelcase(:lower)}" }.join("\n") %>
       }
     }
   }

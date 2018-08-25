@@ -7,7 +7,7 @@ const query = gql`
   query Get<%= class_name %>($id: ID) {
     <%= class_name.camelcase(:lower) %>(id: $id) {
       id
-<%= attributes.map { |attribute| "      #{attribute.name.camelcase(:lower)}" }.join("\n") %>
+<%= attributes_for_grahql.map { |attribute| "      #{attribute.name.camelcase(:lower)}" }.join("\n") %>
     }
   }
 `

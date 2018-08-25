@@ -3,7 +3,7 @@
 module Types
   class <%= class_name %> < Types::BaseObject
     field :id, ID, null: false
-<% attributes.each do |attribute| -%>
+<% attributes_for_grahql.each do |attribute| -%>
     field :<%= attribute.name %>, <%= attribute.type.capitalize %>, null: true
 <% end -%>
     field :created_at, String, null: false

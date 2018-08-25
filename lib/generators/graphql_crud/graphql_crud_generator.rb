@@ -62,7 +62,13 @@ class GraphqlCrudGenerator < Rails::Generators::NamedBase
 
   private
 
-    def attributes_with_index
-      attributes.select { |a| !a.reference? && a.has_index? }
+    def attributes_for_grahql
+      attributes.map do |attribute|
+        case attribute.type
+        when :integer
+          attribute.type = :int
+        end
+        attribute
+      end
     end
 end
